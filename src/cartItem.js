@@ -1,43 +1,15 @@
 import React from 'react';
 
 class CartItem extends React.Component {
-    
-
-    increaseQuantity = () =>{
-        //setState form 1
-        //this.setState({
-        //    qty:this.state.qty+1
-        //});
-
-        //setState form 2 - if prevState is required this technique should be used
-        this.setState((prevState)=>{
-            return{
-                qty:prevState.qty+1
-            }
-        },()=>{
-            console.log('this.state',this.state);
-        });
-    }
-
-    decreaseQuantity=()=>{
-        if(this.props.product.qty>0){
-            //setState method 1
-            //this.setState({
-            //    qty:this.state.qty-1
-            //});
-            
-            //SetState method 2
-            this.setState((prevState)=>{
-                return{
-                    qty:prevState.qty-1
-                }
-            });
-        }
-    }
-
     render() {
         console.log('this.props',this.props);
         const{price,title,qty} = this.props.product;
+        const{
+            product,
+            onIncreaseQuantity,
+            onDecreaseQuantity,
+            onDeleteProduct
+        } = this.props;
         return (
             <div className="cart-item">
                 <div className="left-block">
@@ -53,18 +25,19 @@ class CartItem extends React.Component {
                             alt="increase" 
                             className="action-icons" 
                             src="https://image.flaticon.com/icons/svg/1828/1828926.svg"
-                            onClick={this.increaseQuantity} 
+                            onClick={()=> onIncreaseQuantity(product)} 
                         />
                         <img 
                             alt="decrease" 
                             className="action-icons" 
                             src="https://image.flaticon.com/icons/svg/1665/1665612.svg"
-                            onClick={this.decreaseQuantity} 
+                            onClick={()=> onDecreaseQuantity(product)} 
                         />
                         <img 
                             alt="delete" 
                             className="action-icons" 
-                            src="https://image.flaticon.com/icons/svg/1345/1345874.svg" 
+                            src="https://image.flaticon.com/icons/svg/1345/1345874.svg"
+                            onClick={()=> onDeleteProduct(product.id)} 
                         />
                     </div>
                 </div>
